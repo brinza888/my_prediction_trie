@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QListWidget>
+
+#include "csvparser.h"
+#include "PredictionTrie.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,7 +20,17 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_te_Text_textChanged();
+
+protected:
+    bool eventFilter(QObject *object, QEvent *event);
+
 private:
     Ui::MainWindow *ui;
+    QListWidget* _hintList;
+
+    CSVParser _data;
+    PredictionTrie _ptrie;
 };
 #endif // MAINWINDOW_H

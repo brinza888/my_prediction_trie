@@ -34,6 +34,8 @@ if(ANDROID)
     mainwindow.ui
     PredictionTrie.h
     PredictionTrie.cpp
+    csvparser.h
+    csvparser.cpp
   )
 else()
   add_executable(prediction_trie
@@ -43,6 +45,8 @@ else()
     mainwindow.ui
     PredictionTrie.h
     PredictionTrie.cpp
+    csvparser.h
+    csvparser.cpp
   )
 endif()
 
