@@ -2,7 +2,7 @@
 #define MYCOMPLETER_H
 
 #include <QListWidget>
-#include <QTextEdit>
+#include <QPlainTextEdit>
 #include <string>
 
 #include "PredictionTrie.h"
@@ -16,7 +16,7 @@ class MyCompleter : public QListWidget
     Q_OBJECT
 
 public:
-    MyCompleter(QTextEdit* parent, PredictionTrie& ptrie);
+    MyCompleter(QPlainTextEdit* parent, PredictionTrie* ptrie);
 
 protected:
     bool eventFilter(QObject *object, QEvent *event);
@@ -27,7 +27,7 @@ private slots:
 
 private:
     PredictionTrie* _ptrie;
-    QTextEdit* _textEdit;
+    QPlainTextEdit* _textEdit;
 };
 
 #endif // MYCOMPLETER_H

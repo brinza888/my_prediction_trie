@@ -17,17 +17,17 @@ string getLastWord(string& text) {
 }
 
 
-MyCompleter::MyCompleter(QTextEdit* parent, PredictionTrie& ptrie) :
+MyCompleter::MyCompleter(QPlainTextEdit* parent, PredictionTrie* ptrie) :
     QListWidget((QWidget*) parent)
 {
-    _ptrie = &ptrie;
+    _ptrie = ptrie;
     _textEdit = parent;
 
     resize(150, 70);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setFont(QFont("Sans Serif", 12));
-    _textEdit->installEventFilter(this);
 
+    _textEdit->installEventFilter(this);
     connect(_textEdit, SIGNAL(textChanged()), this, SLOT(textChanged()));
     connect(_textEdit, SIGNAL(cursorPositionChanged()), this, SLOT(cursorPositionChanged()));
 }
@@ -50,6 +50,11 @@ bool MyCompleter::eventFilter(QObject *object, QEvent *event) {
             _textEdit->insertPlainText(QString::fromStdString(completion + " "));
             _ptrie->insert(word);
             return true;
+        }
+        else if (keyEvent->key() == Qt::Key_Space) {
+            string text = _textEdit->toPlainText().toStdString();
+            string lastWord = getLastWord(text);
+            _ptrie->insert(lastWord);
         }
         else if (keyEvent->key() == Qt::Key_Escape) {
             hide();

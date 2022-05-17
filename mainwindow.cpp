@@ -4,6 +4,9 @@
 #include "PredictionTrie.h"
 #include "mycompleter.h"
 
+#include <QDebug>
+#include <QCloseEvent>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,11 +19,15 @@ MainWindow::MainWindow(QWidget *parent)
         _ptrie.insert(_data[i][0], std::stoi(_data[i][1]));
     }
 
-    completer = new MyCompleter(ui->te_Text, _ptrie);
+    completer = new MyCompleter(ui->te_Text, &_ptrie);
 }
 
 MainWindow::~MainWindow()
 {
+    delete ui;
+}
+
+void MainWindow::closeEvent (QCloseEvent *event) {
     vector<MatchedPair> allWords = _ptrie.allWordsStartedWith("");
     for (auto&& [word, points]: allWords) {
         vector<string> row({word, std::to_string(points)});
@@ -33,5 +40,4 @@ MainWindow::~MainWindow()
         }
     }
     _data.write();
-    delete ui;
 }
