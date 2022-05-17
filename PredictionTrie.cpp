@@ -15,7 +15,7 @@ PredictionTrie::~PredictionTrie()
 
 }
 
-void PredictionTrie::insert(const std::string& word)
+void PredictionTrie::insert(const std::string& word, unsigned int points)
 {
     auto* current = _root;
     for (auto letter : word)
@@ -31,7 +31,7 @@ void PredictionTrie::insert(const std::string& word)
     }
 
     current->type = PredictionTrie::PredictionTrieNode::Type::Leaf;
-    current->count += 1u;
+    current->count += points;
 }
 
 void PredictionTrie::remove(const std::string& word)
@@ -64,7 +64,7 @@ bool PredictionTrie::isPresented(const std::string& word) const
     return found && found->type == PredictionTrie::PredictionTrieNode::Type::Leaf;
 }
 
-std::vector<PredictionTrie::MatchedPair> PredictionTrie::allWordsStartedWith(const std::string& wordBegin) const
+std::vector<MatchedPair> PredictionTrie::allWordsStartedWith(const std::string& wordBegin) const
 {
     auto* found = find(wordBegin);
     if (!found)
@@ -81,7 +81,7 @@ std::vector<PredictionTrie::MatchedPair> PredictionTrie::allWordsStartedWith(con
 void PredictionTrie::collectAllWordsStartedWith(
     const std::string& wordPart,
     const std::unordered_map<char, PredictionTrieNode*>& letterLayer,
-    std::vector<PredictionTrie::MatchedPair>& result) const
+    std::vector<MatchedPair>& result) const
 {
     for (auto&& [letter, node] : letterLayer)
     {
@@ -100,7 +100,9 @@ std::string PredictionTrie::findBestMatch(const std::string& wordBegin) const
     return findBestMatches(wordBegin, 1).front();
 }
 
-std::vector<std::string> PredictionTrie::findBestMatches(const std::string& wordBegin, unsigned count) const
+std::vector<std::string> PredictionTrie::findBestMatches(
+            const std::string& wordBegin,
+            unsigned count) const
 {
     auto allWords = allWordsStartedWith(wordBegin);
 

@@ -6,10 +6,11 @@
 #include <vector>
 #include <string>
 
+using MatchedPair = std::tuple<std::string, unsigned int>;
+
+
 class PredictionTrie
 {
-    using MatchedPair = std::tuple<std::string, unsigned int>;
-
     struct PredictionTrieNode
     {
         enum class Type
@@ -40,7 +41,7 @@ public:
     PredictionTrie(const PredictionTrie& other) = delete;
     PredictionTrie(PredictionTrie&& other) = delete;
 
-    void insert(const std::string& word);
+    void insert(const std::string& word, unsigned int points = 1);
     void remove(const std::string& word);
 
     bool isPresented(const std::string& word) const;

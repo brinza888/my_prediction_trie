@@ -24,26 +24,24 @@ void CSVParser::read(string filePath) {
     std::stringstream lineStream(line);
     _table.push_back(vector<string>());
 
-    do {
-        std::getline(lineStream, value, ',');
+    while (std::getline(lineStream, value, ',')) {
         _columnsCount += 1;
         _table.back().push_back(value);
-    } while (!lineStream.eof());
+    }
 
-    do {
-        std::getline(file, line);
+    while(std::getline(file, line)) {
         _table.push_back(vector<string>());
         lineStream = std::stringstream(line);
         for (size_t i = 0; i < _columnsCount; i++) {
             std::getline(lineStream, value, ',');
             _table.back().push_back(value);
         }
-    } while (!file.eof());
+    }
 
     file.close();
 }
 
-void CSVParser::write(std::string filePath) {
+void CSVParser::write(std::string filePath) const {
     if (!filePath.size()) {
         filePath = _filePath;
     }
@@ -63,11 +61,11 @@ void CSVParser::write(std::string filePath) {
     file.close();
 }
 
-vector<string>& CSVParser::getHeader() {
+vector<string> CSVParser::getHeader() const {
     return _table.front();
 }
 
-size_t CSVParser::getColumnIndex(const string& columnName) {
+size_t CSVParser::getColumnIndex(const string& columnName) const {
     vector<string> header = getHeader();
     for (size_t idx = 0; idx < header.size(); idx++) {
         if (header[idx] == columnName) {
@@ -96,6 +94,10 @@ size_t CSVParser::findFirst(const vector<string>& querry) const {
         querryStr += el + ",";
     }
     throw std::invalid_argument("В файле: " + _filePath  + "\nПо запросу: (" + querryStr + ")");
+}
+
+void CSVParser::newRow(const vector<string>& values) {
+    _table.push_back(values);
 }
 
 vector<string>& CSVParser::operator [](const size_t idx) {

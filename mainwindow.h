@@ -8,6 +8,9 @@
 #include "PredictionTrie.h"
 
 
+string getLastWord(string& text);
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -22,6 +25,8 @@ public:
 
 private slots:
     void on_te_Text_textChanged();
+
+    void on_te_Text_cursorPositionChanged();
 
 protected:
     bool eventFilter(QObject *object, QEvent *event);

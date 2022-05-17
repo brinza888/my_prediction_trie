@@ -18,15 +18,18 @@ public:
     string getPath() const;
 
     void read(string filePath);
-    void write(string filePath = "");
+    void write(string filePath = "") const;
 
-    vector<string>& getHeader();
-    size_t getColumnIndex(const string& columnName);
+    vector<string> getHeader() const;
+
+    size_t getColumnIndex(const string& columnName) const;
 
     size_t getColumnsCount() const;
     size_t getRowsCount() const;
 
     size_t findFirst(const vector<string>& querry) const;
+
+    void newRow(const vector<string>& values);
 
     vector<string>& operator[](const size_t idx);
     vector<string> operator [](const size_t idx) const;
