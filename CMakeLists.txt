@@ -36,6 +36,8 @@ if(ANDROID)
     PredictionTrie.cpp
     csvparser.h
     csvparser.cpp
+    mycompleter.h
+    mycompleter.cpp
   )
 else()
   add_executable(prediction_trie
@@ -47,6 +49,8 @@ else()
     PredictionTrie.cpp
     csvparser.h
     csvparser.cpp
+    mycompleter.h
+    mycompleter.cpp
   )
 endif()
 

@@ -6,9 +6,7 @@
 
 #include "csvparser.h"
 #include "PredictionTrie.h"
-
-
-string getLastWord(string& text);
+#include "mycompleter.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -23,18 +21,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void on_te_Text_textChanged();
-
-    void on_te_Text_cursorPositionChanged();
-
-protected:
-    bool eventFilter(QObject *object, QEvent *event);
-
 private:
     Ui::MainWindow *ui;
-    QListWidget* _hintList;
 
+    MyCompleter* completer;
     CSVParser _data;
     PredictionTrie _ptrie;
 };
