@@ -1,6 +1,7 @@
 #include "mycompleter.h"
 
 #include <QKeyEvent>
+#include <QDebug>
 #include <sstream>
 #include <vector>
 
@@ -44,8 +45,8 @@ bool MyCompleter::eventFilter(QObject *object, QEvent *event) {
         }
         else if (keyEvent->key() == Qt::Key_Return && currentRow() != -1) {
             string text = _textEdit->toPlainText().toStdString();
-            string word = currentItem()->text().toStdString();
             string lastWord = getLastWord(text);
+            string word = currentItem()->text().toStdString();
             string completion = word.substr(lastWord.size(), word.size() - lastWord.size());
             _textEdit->insertPlainText(QString::fromStdString(completion + " "));
             _ptrie->insert(word);
@@ -78,7 +79,7 @@ void MyCompleter::textChanged()
     move(cursor);
     string text = _textEdit->toPlainText().toStdString();
     string word = getLastWord(text);
-    vector<string> bestMatches = _ptrie->findBestMatches(word, 5);
+    vector<string> bestMatches = _ptrie->findBestMatches(word, 10);
     clear();
     for (auto&& word: bestMatches) {
         addItem(QString::fromStdString(word));
