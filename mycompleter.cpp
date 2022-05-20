@@ -9,12 +9,11 @@ using std::string;
 using std::vector;
 
 
-string getLastWord(string& text) {
-    std::stringstream stext;
-    stext << text;
-    string word;
-    while (std::getline(stext, word, ' '));
-    return word;
+string getLastWord(QPlainTextEdit* textEdit) {
+    QTextCursor tc = textEdit->textCursor();
+    tc.select(QTextCursor::WordUnderCursor);
+    QString word = tc.selectedText();
+    return word.toStdString();
 }
 
 
@@ -44,8 +43,7 @@ bool MyCompleter::eventFilter(QObject *object, QEvent *event) {
             setCurrentRow((currentRow() + count() - 1) % count());
         }
         else if (keyEvent->key() == Qt::Key_Return && currentRow() != -1) {
-            string text = _textEdit->toPlainText().toStdString();
-            string lastWord = getLastWord(text);
+            string lastWord = getLastWord(_textEdit);
             string word = currentItem()->text().toStdString();
             string completion = word.substr(lastWord.size(), word.size() - lastWord.size());
             _textEdit->insertPlainText(QString::fromStdString(completion + " "));
@@ -53,9 +51,10 @@ bool MyCompleter::eventFilter(QObject *object, QEvent *event) {
             return true;
         }
         else if (keyEvent->key() == Qt::Key_Space) {
-            string text = _textEdit->toPlainText().toStdString();
-            string lastWord = getLastWord(text);
-            _ptrie->insert(lastWord);
+            string lastWord = getLastWord(_textEdit);
+            if (!lastWord.empty()) {
+                _ptrie->insert(lastWord);
+            }
         }
         else if (keyEvent->key() == Qt::Key_Escape) {
             hide();
@@ -77,8 +76,7 @@ void MyCompleter::textChanged()
         cursor.setY(cursor.y() + 20);
     }
     move(cursor);
-    string text = _textEdit->toPlainText().toStdString();
-    string word = getLastWord(text);
+    string word = getLastWord(_textEdit);
     vector<string> bestMatches = _ptrie->findBestMatches(word, 10);
     clear();
     for (auto&& word: bestMatches) {
