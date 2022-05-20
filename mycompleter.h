@@ -8,7 +8,7 @@
 #include "PredictionTrie.h"
 
 
-std::string getLastWord(std::string& text);
+std::string getLastWord(QPlainTextEdit* textEdit);
 
 
 class MyCompleter : public QListWidget
