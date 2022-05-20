@@ -34,8 +34,6 @@ if(ANDROID)
     mainwindow.ui
     PredictionTrie.h
     PredictionTrie.cpp
-    csvparser.h
-    csvparser.cpp
     mycompleter.h
     mycompleter.cpp
   )
@@ -47,8 +45,6 @@ else()
     mainwindow.ui
     PredictionTrie.h
     PredictionTrie.cpp
-    csvparser.h
-    csvparser.cpp
     mycompleter.h
     mycompleter.cpp
   )

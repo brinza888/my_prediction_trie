@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QListWidget>
 
-#include "csvparser.h"
 #include "PredictionTrie.h"
 #include "mycompleter.h"
 
@@ -21,14 +20,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-protected:
-    void closeEvent (QCloseEvent *event);
-
 private:
     Ui::MainWindow *ui;
 
     MyCompleter* completer;
-    CSVParser _data;
     PredictionTrie _ptrie;
 };
 #endif // MAINWINDOW_H
