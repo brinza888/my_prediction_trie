@@ -14,6 +14,7 @@ PredictionTrie::PredictionTrie()
 PredictionTrie::~PredictionTrie()
 {
     clear();
+    delete _root;
 }
 
 void PredictionTrie::insert(const std::string& word, unsigned int points)
@@ -46,7 +47,10 @@ void PredictionTrie::remove(const std::string& word)
 void PredictionTrie::clear() {
     PredictionTrieNode* current;
     std::queue<PredictionTrieNode*> deleteQueue;
-    deleteQueue.push(_root);
+    for (auto&& [letter, node]: _root->children) {
+        deleteQueue.push(node);
+    }
+    _root->children.clear();
     while (!deleteQueue.empty()) {
         current = deleteQueue.front();
         deleteQueue.pop();
