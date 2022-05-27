@@ -5,7 +5,6 @@
 #include "mycompleter.h"
 
 #include <QDebug>
-#include <QCloseEvent>
 
 
 MainWindow::MainWindow(QWidget *parent)
