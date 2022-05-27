@@ -65,8 +65,11 @@ bool MyCompleter::eventFilter(QObject *object, QEvent *event) {
     return QWidget::eventFilter(object,event);
 }
 
-void MyCompleter::textChanged()
-{
+void MyCompleter::textChanged() {
+    refresh();
+}
+
+void MyCompleter::refresh() {
     QPoint cursor = _textEdit->cursorRect().topLeft();
     if (cursor.x() + width() > _textEdit->rect().topRight().x()) {
         cursor.setX(cursor.x() - width());

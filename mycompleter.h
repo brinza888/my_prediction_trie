@@ -17,6 +17,7 @@ class MyCompleter : public QListWidget
 
 public:
     MyCompleter(QPlainTextEdit* parent, PredictionTrie* ptrie);
+    void refresh();
 
 protected:
     bool eventFilter(QObject *object, QEvent *event);

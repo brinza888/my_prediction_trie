@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::clearClicked() {
     _ptrie.clear();
+    completer->refresh();
 }
 
 MainWindow::~MainWindow()
