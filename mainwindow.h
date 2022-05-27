@@ -26,7 +26,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    MyCompleter* completer;
+    MyCompleter* _completer;
     PredictionTrie _ptrie;
 };
 #endif // MAINWINDOW_H

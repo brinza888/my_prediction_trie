@@ -13,14 +13,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    completer = new MyCompleter(ui->te_Text, &_ptrie);
+    _completer = new MyCompleter(ui->te_Text, &_ptrie);
 
     connect(ui->pb_Clear, SIGNAL(clicked()), this, SLOT(clearClicked()));
 }
 
 void MainWindow::clearClicked() {
     _ptrie.clear();
-    completer->refresh();
+    _completer->refresh();
 }
 
 MainWindow::~MainWindow()
