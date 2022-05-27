@@ -35,22 +35,24 @@ MyCompleter::MyCompleter(QPlainTextEdit* parent, PredictionTrie* ptrie) :
 bool MyCompleter::eventFilter(QObject *object, QEvent *event) {
     if (object == _textEdit && (event->type() == QEvent::KeyPress || event->type() == QEvent::Enter)) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-        if (keyEvent->key() == Qt::Key_Down) {
+        int key = keyEvent->key();
+        if (key == Qt::Key_Down && !isHidden()) {
             setCurrentRow((currentRow() + 1) % count());
             return true;
         }
-        else if (keyEvent->key() == Qt::Key_Up) {
+        else if (key == Qt::Key_Up && !isHidden()) {
             setCurrentRow((currentRow() + count() - 1) % count());
+            return true;
         }
-        else if (keyEvent->key() == Qt::Key_Return && currentRow() != -1) {
+        else if (key == Qt::Key_Return && currentRow() != -1 && !isHidden()) {
             string lastWord = getLastWord(_textEdit);
             string word = currentItem()->text().toStdString();
             string completion = word.substr(lastWord.size(), word.size() - lastWord.size());
-            _textEdit->insertPlainText(QString::fromStdString(completion + " "));
+            _textEdit->insertPlainText(QString::fromStdString(completion));
             _ptrie->insert(word);
             return true;
         }
-        else if (keyEvent->key() == Qt::Key_Space) {
+        else if (key == Qt::Key_Space || key == Qt::Key_Return) {
             string lastWord = getLastWord(_textEdit);
             if (!lastWord.empty()) {
                 _ptrie->insert(lastWord);
