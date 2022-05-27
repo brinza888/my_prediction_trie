@@ -41,6 +41,7 @@ void PredictionTrie::remove(const std::string& word)
     PredictionTrieNode* node = find(word);
     if (node != nullptr) {
         node->type = PredictionTrieNode::Type::Regular;
+        node->count = 0u;
     }
 }
 
