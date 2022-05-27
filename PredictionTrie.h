@@ -43,6 +43,7 @@ public:
 
     void insert(const std::string& word, unsigned int points = 1);
     void remove(const std::string& word);
+    void clear();
 
     bool isPresented(const std::string& word) const;
 

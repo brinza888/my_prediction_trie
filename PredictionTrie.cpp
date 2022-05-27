@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <tuple>
+#include <queue>
 
 PredictionTrie::PredictionTrie()
 {
@@ -12,7 +13,7 @@ PredictionTrie::PredictionTrie()
 
 PredictionTrie::~PredictionTrie()
 {
-
+    clear();
 }
 
 void PredictionTrie::insert(const std::string& word, unsigned int points)
@@ -37,6 +38,23 @@ void PredictionTrie::insert(const std::string& word, unsigned int points)
 void PredictionTrie::remove(const std::string& word)
 {
 
+}
+
+void PredictionTrie::clear() {
+    PredictionTrieNode* current;
+    std::queue<PredictionTrieNode*> deleteQueue;
+    deleteQueue.push(_root);
+    while (!deleteQueue.empty()) {
+        current = deleteQueue.front();
+        deleteQueue.pop();
+        if (current == nullptr) {
+            continue;
+        }
+        for (auto&& [letter, node]: current->children) {
+            deleteQueue.push(node);
+        }
+        delete current;
+    }
 }
 
 const PredictionTrie::PredictionTrieNode* PredictionTrie::find(const std::string& word) const
