@@ -20,6 +20,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void clearClicked();
+
 private:
     Ui::MainWindow *ui;
 

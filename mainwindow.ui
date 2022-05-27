@@ -27,6 +27,13 @@
       <item>
        <widget class="QPlainTextEdit" name="te_Text"/>
       </item>
+      <item>
+       <widget class="QPushButton" name="pb_Clear">
+        <property name="text">
+         <string>clear hints history</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>
