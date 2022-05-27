@@ -37,7 +37,10 @@ void PredictionTrie::insert(const std::string& word, unsigned int points)
 
 void PredictionTrie::remove(const std::string& word)
 {
-
+    PredictionTrieNode* node = find(word);
+    if (node != nullptr) {
+        node->type = PredictionTrieNode::Type::Regular;
+    }
 }
 
 void PredictionTrie::clear() {
@@ -55,6 +58,10 @@ void PredictionTrie::clear() {
         }
         delete current;
     }
+}
+
+PredictionTrie::PredictionTrieNode* PredictionTrie::find(const std::string& word) {
+    return const_cast<PredictionTrieNode*>(const_cast<const PredictionTrie*>(this)->find(word));
 }
 
 const PredictionTrie::PredictionTrieNode* PredictionTrie::find(const std::string& word) const
